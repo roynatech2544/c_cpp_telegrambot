@@ -45,7 +45,7 @@ int main(int argc, char *const *argv) {
     }
     token = *ret;
     static Bot gBot(token);
-    database::DBWrapper.loadMain(gBot);
+    database::DatabaseWrapperImplObj::getInstance().loadMain(gBot);
     ResourceManager::getInstance().preloadResourceDirectory();
 
     CommandModule::loadCommandModules(gBot);
@@ -114,7 +114,7 @@ int main(int argc, char *const *argv) {
         } catch (const std::exception &e) {
             LOG(LogLevel::ERROR, "Exception: %s", e.what());
             LOG(LogLevel::WARNING, "Trying to recover");
-            UserId ownerid = database::DBWrapper.maybeGetOwnerId();
+            UserId ownerid = database::DatabaseWrapperImplObj::getInstance().maybeGetOwnerId();
             try {
                 bot_sendMessage(gBot, ownerid,
                                 std::string("Exception occured: ") + e.what());

@@ -7,15 +7,12 @@
 #include <cstring>
 #include <string>
 
-#include "ConfigManager.h"
 #include "Logging.h"
 #include "socket/SocketInterfaceBase.h"
 
 #ifdef _MSC_VER
 #define strcasecmp _stricmp
 #endif
-
-using database::DBWrapper;
 
 [[noreturn]] static void usage(const char* argv0, const int exitCode) {
     std::cerr << "Usage: " << argv0 << " <chatId> <name stored in DB>"
@@ -27,6 +24,7 @@ int main(int argc, char* const* argv) {
     ChatId chatId = 0;
     TgBotCommandData::SendFileToChatId data = {};
     const auto _usage = std::bind(usage, argv[0], std::placeholders::_1);
+    auto &DBWrapper = database::DatabaseWrapperImplObj::getInstance();
 
     if (argc != 3) {
         _usage(EXIT_FAILURE);

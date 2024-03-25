@@ -7,10 +7,12 @@
 #include <tgbot/types/Message.h>
 
 #include <filesystem>
+#include <libos/libfs.hpp>
 #include <mutex>
 #include <optional>
 
 #include "BotClassBase.h"
+#include "InstanceClassBase.hpp"
 
 static inline const char kDatabaseFile[] = "tgbot.pb";
 
@@ -98,10 +100,6 @@ struct ProtoDatabase : ProtoDatabaseBase, BotClassBase {
 };
 
 struct DatabaseWrapper {
-    // Load database (excludes blacklist/whitelist, syncthread)
-    void load();
-    // Load database (includes above)
-    void loadMain(const Bot& bot);
     // Save the changes to database file again
     void save(void) const;
     // 'Maybe' would return owner id stored in database
@@ -115,15 +113,24 @@ struct DatabaseWrapper {
     Database protodb;
 
     std::filesystem::path& getDatabasePath() { return fname; }
+    void load(const std::filesystem::path& file);
 
    private:
     bool warnNoLoaded(const char* func) const;
-    void load(const std::filesystem::path& file);
     std::filesystem::path fname;
     bool loaded = false;
     std::once_flag once;
 };
 
-extern DatabaseWrapper DBWrapper;
+struct DatabaseWrapperImpl : public DatabaseWrapper {
+    // Load database (excludes blacklist/whitelist, syncthread)
+    void load();
+    // TODO: Try to eject Bot dep here
+    // Load database (includes blacklist/whitelist, syncthread)
+    void loadMain(const Bot& bot);
+};
+
+struct DatabaseWrapperImplObj : public DatabaseWrapperImpl,
+                                InstanceClassBase<DatabaseWrapperImplObj> {};
 
 };  // namespace database

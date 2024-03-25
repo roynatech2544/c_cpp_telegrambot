@@ -4,9 +4,9 @@
 
 bool gAuthorized = true;
 
-using database::DBWrapper;
-
 bool Authorized(const Message::Ptr &message, const int flags) {
+    static auto& DBWrapper = database::DatabaseWrapperImplObj::getInstance();
+
     if (!gAuthorized || !isMessageUnderTimeLimit(message)) return false;
 
     if (message->from) {
@@ -19,7 +19,7 @@ bool Authorized(const Message::Ptr &message, const int flags) {
             bool ret = false;
             if (const auto whitelist = DBWrapper.whitelist; whitelist)
                 ret |= whitelist->exists(id);
-            ret |= id == database::DBWrapper.maybeGetOwnerId();
+            ret |= id == DBWrapper.maybeGetOwnerId();
             return ret;
         }
     } else {
