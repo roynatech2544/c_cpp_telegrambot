@@ -4,7 +4,7 @@
 
 #include <filesystem>
 #include <vector>
-#include "InstanceClassBase.hpp"
+#include "base/InstanceClassBase.hpp"
 
 using TgBot::Bot;
 using TgBot::Message;

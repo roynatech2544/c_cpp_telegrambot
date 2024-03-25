@@ -13,7 +13,7 @@
 #include <utility>
 
 #include "EnumArrayHelpers.h"
-#include "InstanceClassBase.hpp"
+#include "base/InstanceClassBase.hpp"
 #include "Logging.h"
 
 struct SingleThreadCtrl;

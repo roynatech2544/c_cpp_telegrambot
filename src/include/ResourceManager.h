@@ -4,7 +4,7 @@
 #include <string>
 #include <filesystem>
 
-#include "InstanceClassBase.hpp"
+#include "base/InstanceClassBase.hpp"
 
 struct ResourceManager : public InstanceClassBase<ResourceManager> {
     bool preloadOneFile(std::filesystem::path p);

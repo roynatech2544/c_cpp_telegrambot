@@ -7,7 +7,7 @@
 #include <memory>
 
 #include "SingleThreadCtrl.h"
-#include "BotClassBase.h"
+#include "base/BotClassBase.h"
 
 #ifdef SOCKET_CONNECTION
 #include <socket/TgBotSocket.h>

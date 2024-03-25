@@ -11,8 +11,8 @@
 #include <mutex>
 #include <optional>
 
-#include "BotClassBase.h"
-#include "InstanceClassBase.hpp"
+#include "base/BotClassBase.h"
+#include "base/InstanceClassBase.hpp"
 
 static inline const char kDatabaseFile[] = "tgbot.pb";
 
